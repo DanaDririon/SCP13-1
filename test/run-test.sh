@@ -166,6 +166,7 @@ function find_code_deps {
     need_cmd md5sum
     need_cmd python3
     need_cmd pip
+	need_cmd unix2dos
 }
 
 function find_web_deps {
@@ -207,6 +208,7 @@ function run_code_tests {
     run_test_fail "no invalid spans" "grep -En \"<\s*span\s+class\s*=\s*('[^'>]+|[^'>]+')\s*>\" **/*.dm"
     run_test "code quality checks" "test/check-paths.sh"
     run_test "indentation check" "awk -f tools/indentation.awk **/*.dm"
+	unix2dos html/changelogs/example.yml
     run_test "check changelog example unchanged" "md5sum -c - <<< '683a3e0d21b90581ae6e4c95052d461e *html/changelogs/example.yml'"
     run_test "check tags" "python3 tools/TagMatcher/tag-matcher.py ."
     run_test "check color hex" "python3 tools/ColorHexChecker/color-hex-checker.py ."
