@@ -67,6 +67,14 @@ GLOBAL_VAR(spawntypes)
 	turfs = GLOB.latejoin_cryo
 
 /datum/spawnpoint/cryo/after_join(mob/living/carbon/human/victim)
+	var/list/SCPplayers = list()
+	var/numberOfSCP = 0
+	var/list/players = list()
+	for(var/client/C in GLOB.clients)
+		players += C.key
+	while(numberOfSCP < 1)
+		SCPplayers += pick(players)
+		numberOfSCP++
 	if(!istype(victim))
 		return
 	var/area/A = get_area(victim)
@@ -75,6 +83,9 @@ GLOBAL_VAR(spawntypes)
 			C.set_occupant(victim, 1)
 			victim.Sleeping(rand(1,3))
 			to_chat(victim,SPAN_NOTICE("You are slowly waking up from the cryostasis aboard [GLOB.using_map.full_name]. It might take a few seconds."))
+			to_chat(victim,SPAN_NOTICE("Should se SCP players now."))
+			//to_chat(victim,SPAN_NOTICE("You had a horrible accident and you are now an SCP"))
+			to_chat(victim,SPAN_NOTICE("[SCPplayers[0]] is a SCP"))
 			return
 
 /datum/spawnpoint/cyborg
