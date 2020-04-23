@@ -1,5 +1,7 @@
 #define SOUND_ID "pipe_leakage"
 
+#define PIPE_PROCESS_CHECK if (prob(80)) return
+
 /obj/machinery/atmospherics/pipe
 
 	var/datum/gas_mixture/air_temporary // used when reconstructing a pipeline that broke
@@ -193,6 +195,7 @@
 	update_icon()
 
 /obj/machinery/atmospherics/pipe/simple/Process()
+	PIPE_PROCESS_CHECK
 	if(!parent) //This should cut back on the overhead calling build_network thousands of times per cycle
 		..()
 	else if(leaking)
